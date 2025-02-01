@@ -1,20 +1,19 @@
 
 let quotes = JSON.parse(localStorage.getItem("quotes")) || [
     { text: "The only way to do great work is to love what you do.", category: "Motivation" },
-    { text: "Life is what happens when you are busy making other plans.", category: "Life" },
+    { text: "Life is what happens when you’re busy making other plans.", category: "Life" },
     { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", category: "Success" }
 ];
-
 
 function showRandomQuote() {
     const quoteDisplay = document.getElementById("quoteDisplay");
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const randomQuote = quotes[randomIndex];
-    
-  
-    sessionStorage.setItem("lastViewedQuote", JSON.stringify(randomQuote));
 
     
+    sessionStorage.setItem("lastViewedQuote", JSON.stringify(randomQuote));
+
+   
     quoteDisplay.innerHTML = `<p><strong>${randomQuote.category}:</strong> ${randomQuote.text}</p>`;
 }
 
@@ -25,15 +24,19 @@ document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 function addQuote() {
     const newQuoteText = document.getElementById("newQuoteText").value.trim();
     const newQuoteCategory = document.getElementById("newQuoteCategory").value.trim();
-    
+
     if (newQuoteText === "" || newQuoteCategory === "") {
         alert("Please enter both a quote and a category.");
         return;
     }
 
+    
     quotes.push({ text: newQuoteText, category: newQuoteCategory });
+
+
     localStorage.setItem("quotes", JSON.stringify(quotes));
 
+   
     document.getElementById("newQuoteText").value = "";
     document.getElementById("newQuoteCategory").value = "";
 
@@ -41,15 +44,21 @@ function addQuote() {
 }
 
 
+document.getElementById("addQuoteButton").addEventListener("click", addQuote);
+
+
 function exportToJsonFile() {
     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(quotes));
     const downloadAnchor = document.createElement("a");
     downloadAnchor.setAttribute("href", dataStr);
     downloadAnchor.setAttribute("download", "quotes.json");
-    document.body.appendChild(downloadAnchor);
+    document.body.appendChild(downloadAnchor); 
     downloadAnchor.click();
     document.body.removeChild(downloadAnchor); 
 }
+
+
+document.getElementById("exportQuotes").addEventListener("click", exportToJsonFile);
 
 
 function importFromJsonFile(event) {
@@ -76,6 +85,3 @@ function importFromJsonFile(event) {
     };
     reader.readAsText(file);
 }
-
-
-document.getElementById("importQuotesFile").addEventListener("change", importFromJsonFile);
