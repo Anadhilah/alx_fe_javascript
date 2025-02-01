@@ -8,33 +8,44 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   function loadSelectedCategory() {
     const savedCategory = localStorage.getItem("selectedCategory") || "all";
     document.getElementById("categoryFilter").value = savedCategory;
-    filterQuotes();
+    filterQuotes(); // Filter quotes based on saved category
   }
   
   // Populate the category filter dropdown dynamically
   function populateCategories() {
     const categoryFilter = document.getElementById("categoryFilter");
-    const categories = [...new Set(quotes.map(quote => quote.category))];
+    const categories = [...new Set(quotes.map(quote => quote.category))]; // Extract unique categories
+    
+    // Add categories to the dropdown
     categories.forEach(category => {
       const option = document.createElement("option");
       option.value = category;
       option.textContent = category;
       categoryFilter.appendChild(option);
     });
+  
+    // Add the "All Categories" option at the top
+    const allOption = document.createElement("option");
+    allOption.value = "all";
+    allOption.textContent = "All Categories";
+    categoryFilter.insertBefore(allOption, categoryFilter.firstChild);
   }
   
   // Filter quotes based on the selected category
   function filterQuotes() {
     const selectedCategory = document.getElementById("categoryFilter").value;
-    const filteredQuotes = selectedCategory === "all" ? quotes : quotes.filter(quote => quote.category === selectedCategory);
-    displayQuotes(filteredQuotes);
-    localStorage.setItem("selectedCategory", selectedCategory); // Save selected filter
+    const filteredQuotes = selectedCategory === "all" 
+      ? quotes 
+      : quotes.filter(quote => quote.category === selectedCategory); // Filter based on selected category
+    
+    displayQuotes(filteredQuotes); // Update the displayed quotes
+    localStorage.setItem("selectedCategory", selectedCategory); // Save the selected filter to localStorage
   }
   
   // Display the filtered quotes
   function displayQuotes(filteredQuotes) {
     const quoteDisplay = document.getElementById("quoteDisplay");
-    quoteDisplay.innerHTML = "";  // Clear current quotes
+    quoteDisplay.innerHTML = ""; // Clear current quotes
     filteredQuotes.forEach(quote => {
       const quoteElement = document.createElement("p");
       quoteElement.innerText = `"${quote.text}" - ${quote.category}`;
