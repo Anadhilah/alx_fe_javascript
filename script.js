@@ -10,7 +10,7 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
     document.getElementById("quoteDisplay").innerText = lastViewedQuote;
   }
   
-  
+
   function showRandomQuote() {
     if (quotes.length === 0) {
       alert("No quotes available!");
@@ -22,28 +22,26 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
     sessionStorage.setItem("lastQuote", `"${randomQuote.text}" - ${randomQuote.category}`);
   }
   
- 
+
   function createAddQuoteForm() {
     const formContainer = document.createElement("div");
     formContainer.id = "addQuoteForm";
   
 
-    
     const quoteInput = document.createElement("input");
     quoteInput.id = "newQuoteText";
     quoteInput.type = "text";
     quoteInput.placeholder = "Enter a new quote";
     formContainer.appendChild(quoteInput);
   
-  
+ 
     const categoryInput = document.createElement("input");
     categoryInput.id = "newQuoteCategory";
     categoryInput.type = "text";
     categoryInput.placeholder = "Enter quote category";
     formContainer.appendChild(categoryInput);
   
-  
-    
+
     const addButton = document.createElement("button");
     addButton.textContent = "Add Quote";
     addButton.onclick = addQuote;
@@ -52,7 +50,7 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
     document.body.appendChild(formContainer);
   }
   
-
+  
   function addQuote() {
     const quoteText = document.getElementById("newQuoteText").value.trim();
     const quoteCategory = document.getElementById("newQuoteCategory").value.trim();
@@ -71,7 +69,6 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   }
   
 
-  
   function exportToJsonFile() {
     const dataStr = JSON.stringify(quotes, null, 2);
     const blob = new Blob([dataStr], { type: "application/json" });
@@ -123,6 +120,7 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   importInput.accept = ".json";
   importInput.addEventListener("change", importFromJsonFile);
   document.body.appendChild(importInput);
+  
   
   createAddQuoteForm();
   
