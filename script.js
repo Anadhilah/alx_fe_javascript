@@ -119,7 +119,18 @@ let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   importInput.id = "importQuotesFile";
   importInput.accept = ".json";
   importInput.addEventListener("change", importFromJsonFile);
-  document.body.appendChild(importInput);
+  document.body.appendChild(importInput);  
+  
+  
+  function updateQuoteDisplay() {
+    const quoteList = document.getElementById("quoteList");
+    quoteList.innerHTML = "";  // Clear current list
+    quotes.forEach(quote => {
+      const listItem = document.createElement("li");
+      listItem.innerText = `"${quote.text}" - ${quote.category}`;
+      quoteList.appendChild(listItem);
+    });
+  }
   
   
   createAddQuoteForm();
